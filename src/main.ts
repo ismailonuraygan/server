@@ -6,6 +6,7 @@ import { connectDatabase, disconnectDatabase } from './utils/database';
 import logger from './utils/logger';
 import { CORS_ORIGIN } from './constants';
 import helmet from 'helmet';
+import userRoute from './modules/user/user.route'
 
 const PORT = process.env.PORT || 4000;
 
@@ -19,10 +20,11 @@ app.use(cors({
 }))
 app.use(helmet());
 
+app.use("/api/user", userRoute)
 
 const server = app.listen(PORT, async ()=> {
     await connectDatabase();
-    logger.info(`Server is running on ${PORT}`
+    logger.info(`Server is running on http://localhost:${PORT}`
     )}
 )
 
