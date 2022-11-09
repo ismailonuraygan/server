@@ -6,18 +6,20 @@ export const registerUserSchema = {
             required_error:"username is required!"
         }),
         email: string({
-            required_error:"username is required!"
-        }),
+            required_error:"email is required!"
+        }).email("Email must be valid email"),
         password: string({
             required_error:"password is required!"
         })
           .min(6, "Password must be at least 6 characters long")
           .max(64, "Password should not be longer than 64 characters"),
-        confirPassword: string({
-            required_error:"password is required!"
+        confirmPassword: string({
+            required_error:"confirm password is required!"
         })
-    }).refine((data)=>data.password === data.confirPassword, {
+    }).refine((data)=>data.password === data.confirmPassword, {
         message: "Passwords do not match!",
         path: ["confirmPassword"]
     })
 }
+
+export type RegisterUserBody = TypeOf<typeof registerUserSchema.body>
