@@ -1,7 +1,5 @@
 import { getModelForClass, prop, pre } from "@typegoose/typegoose"
-import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import argon2, { hash }  from "argon2";
-
 
 @pre<User>("save", async function (next) {
     if(this.isModified("password") || this.isNew){
@@ -30,4 +28,4 @@ export const UserModel = getModelForClass(User, {
     schemaOptions: {
         timestamps: true
     }
-})
+}) 
