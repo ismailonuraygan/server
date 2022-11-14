@@ -1,12 +1,14 @@
 import express from 'express'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { string } from 'zod';
 import { connectDatabase, disconnectDatabase } from './utils/database';
 import logger from './utils/logger';
 import { CORS_ORIGIN } from './constants';
 import helmet from 'helmet';
 import userRoute from './modules/user/user.route'
+import authRoute from './modules/auth/auth.route';
+import videoRoute from './modules/videos/video.route'
+import deserializeUser from './middlewares/deserialiazeUser';
 
 const PORT = process.env.PORT || 4000;
 
@@ -19,8 +21,11 @@ app.use(cors({
     credentials: true
 }))
 app.use(helmet());
+app.use(deserializeUser);
 
-app.use("/api/user", userRoute)
+app.use("/api/users", userRoute); 
+app.use("/api/auth", authRoute);
+app.use("/api/videos", videoRoute);
 
 const server = app.listen(PORT, async ()=> {
     await connectDatabase();
