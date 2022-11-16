@@ -4,10 +4,22 @@ import { MantineProvider } from "@mantine/core";
 import Head from "next/head";
 import { NotificationsProvider } from "@mantine/notifications";
 import { QueryClient } from "react-query";
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 
 const queryClient = new QueryClient();
 
-function MyApp({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <>
       <Head>
@@ -22,8 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         withNormalizeCSS
         theme={{ colorScheme: "light" }}
       >
-        <NotificationsProvider> 
-          <Component {...pageProps} />
+        <NotificationsProvider>
+          {getLayout(
+            <main>
+              <Component {...pageProps} />
+            </main>
+          )}
         </NotificationsProvider>
       </MantineProvider>
     </>
