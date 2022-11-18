@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { useMe } from "../context/me";
+import UploadVideo from '../components/UploadVideo'
 
 function HomePageLayout({ children }: { children: React.ReactNode }) {
   const { user, refetch } = useMe();
@@ -35,7 +36,7 @@ function HomePageLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               </>
             )}
-            {user && <p>Upload Video</p>}
+            {user && <UploadVideo/>}
           </Box>
         </Header>
       }
