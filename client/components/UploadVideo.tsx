@@ -16,6 +16,7 @@ import { useMutation } from "react-query";
 import { uploadVideo, updateVideo } from "../api";
 import { Video } from "../types";
 import { AxiosError, AxiosResponse } from "axios";
+import { useVideo } from "../context/videos";
 
 function EditVideo({
   videoId,
@@ -24,6 +25,7 @@ function EditVideo({
   videoId: string;
   setOpened: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { refetch } = useVideo();
   const form = useForm({
     initialValues: {
       title: "",
@@ -37,6 +39,7 @@ function EditVideo({
     {
       onSuccess: () => {
         setOpened(false);
+        refetch();
       },
     }
   );
