@@ -117,7 +117,8 @@ export async function streamVideoHandler(req: Request, res: Response) {
         "Content-Range": `bytes ${chunkStart}-${chundEnd}/${fileSizeInBytes}`,
         "Accept-Ranges": 'bytes',
         "Content-Length": contentLength,
-        "Content-Type": `video/${video.extension}`
+        "Content-Type": `video/${video.extension}`,
+        "Cross-Origin-Resource-Policy": "cross-origin"
     }
 
     res.writeHead(StatusCodes.PARTIAL_CONTENT, headers);
